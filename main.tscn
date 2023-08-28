@@ -1,12 +1,43 @@
-[gd_scene load_steps=3 format=3 uid="uid://dc7w0kti6q4gc"]
+[gd_scene load_steps=10 format=3 uid="uid://dc7w0kti6q4gc"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ffvtq"]
-[ext_resource type="Texture2D" uid="uid://d21jctxoy8kfu" path="res://icon.svg" id="2_llupq"]
+[ext_resource type="Texture2D" uid="uid://h7bwjte6g4hj" path="res://images/backgrounds/background_02.png" id="2_l8esi"]
+[ext_resource type="Texture2D" uid="uid://hu5ceomt3v01" path="res://images/ui/ui_atlas_01.png" id="4_rehcg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dijgl"]
+atlas = ExtResource("4_rehcg")
+region = Rect2(3, 1, 16, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yvdyo"]
+atlas = ExtResource("4_rehcg")
+region = Rect2(26, 0, 58, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p4gvy"]
+atlas = ExtResource("4_rehcg")
+region = Rect2(93, 24, 17, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yplgf"]
+atlas = ExtResource("4_rehcg")
+region = Rect2(95, 7, 14, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fn2di"]
+atlas = ExtResource("4_rehcg")
+region = Rect2(116, 26, 14, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c2tro"]
+atlas = ExtResource("4_rehcg")
+region = Rect2(116, 7, 14, 16)
 
 [node name="MainNode" type="Node"]
 script = ExtResource("1_ffvtq")
 
+[node name="Background01" type="Sprite2D" parent="."]
+texture = ExtResource("2_l8esi")
+centered = false
+
 [node name="Game" type="Node2D" parent="."]
+
+[node name="LexemeList" type="Node2D" parent="."]
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -18,11 +49,42 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Cursor" type="Sprite2D" parent="UI"]
-position = Vector2(235, 160)
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("2_llupq")
+scale = Vector2(4, 4)
+texture = SubResource("AtlasTexture_dijgl")
+centered = false
+
+[node name="GamepadButtons" type="Sprite2D" parent="UI"]
+position = Vector2(1611, 799)
+scale = Vector2(4, 4)
+texture = SubResource("AtlasTexture_yvdyo")
+centered = false
+
+[node name="GamepadButton_Triangle" type="Sprite2D" parent="UI"]
+position = Vector2(1695, 809)
+scale = Vector2(4, 4)
+texture = SubResource("AtlasTexture_p4gvy")
+centered = false
+
+[node name="GamepadButton_Square" type="Sprite2D" parent="UI"]
+position = Vector2(1636, 883)
+scale = Vector2(4, 4)
+texture = SubResource("AtlasTexture_yplgf")
+centered = false
+
+[node name="GamepadButton_Cross" type="Sprite2D" parent="UI"]
+position = Vector2(1697, 945)
+scale = Vector2(4, 4)
+texture = SubResource("AtlasTexture_fn2di")
+centered = false
+
+[node name="GamepadButton_Circle" type="Sprite2D" parent="UI"]
+position = Vector2(1764, 880)
+scale = Vector2(4, 4)
+texture = SubResource("AtlasTexture_c2tro")
+centered = false
 
 [node name="MarginContainer" type="MarginContainer" parent="UI"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,6 +106,7 @@ size_flags_horizontal = 0
 mouse_filter = 0
 
 [node name="MarginContainer2" type="MarginContainer" parent="UI"]
+visible = false
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -58,6 +121,7 @@ grow_horizontal = 0
 grow_vertical = 0
 
 [node name="Control" type="Control" parent="UI"]
+visible = false
 layout_mode = 1
 anchor_left = 0.818
 anchor_top = 0.749
@@ -122,4 +186,17 @@ offset_bottom = 13.0
 grow_horizontal = 0
 grow_vertical = 2
 text = "RIGHT"
+horizontal_alignment = 1
+
+[node name="DevVersionDisclaimer" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -148.0
+offset_right = 148.0
+offset_bottom = 52.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "Compicactus - Development version
+some assets are borrowed as reference!"
 horizontal_alignment = 1

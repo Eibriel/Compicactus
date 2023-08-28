@@ -1,11 +1,13 @@
 extends Area2D
 
 @export var label := "Label"
+@export var code := "------"
 @export_range(0, 5) var connections_amount := 3
 
 @onready var lasers_node = $LasersNode
 @onready var rays_node = $RaysNode
-@onready var label2d = $Label
+@onready var label2d = %TMRLabel
+@onready var code_label = %ShapesLabel
 
 
 var mat_laser_idle = preload("res://materials/laser_idle.tres")
@@ -23,15 +25,15 @@ const line_resolution = 16
 const line_radius = 0.05
 
 var laser_positions = [
-	[Vector2(-0.4, -0.2)*100, Vector2(-1.7, -0.7)*100],
-	[Vector2(-0.4, 0.2)*100, Vector2(-1.7, 0.7)*100],
-	[Vector2(-0.4, 0)*100, Vector2(-1.7, 0)*100],
+	[Vector2(-0.4, -0.2)*150, Vector2(-1.7, -0.7)*150],
+	[Vector2(-0.4, 0.2)*150, Vector2(-1.7, 0.7)*150],
+	[Vector2(-0.4, 0)*150, Vector2(-1.7, 0)*150],
 ]
 
 func _ready():
 	for n in connections_amount:
 		var laser := Line2D.new()
-		laser.width = 2
+		laser.width = 12
 		laser.add_point(laser_positions[n][0])
 		laser.add_point(laser_positions[n][1])
 		lasers.append(laser)
@@ -52,6 +54,7 @@ func _physics_process(_delta):
 
 func _process(_delta):
 	label2d.text = label
+	code_label.text = code
 	for ray in connections_amount:
 		var start_point = rays[ray].position
 		if rays[ray].is_colliding():
@@ -59,12 +62,12 @@ func _process(_delta):
 			var collision_tmr := rays[ray].get_collider()
 			child_tmrs[ray] = collision_tmr
 			lasers[ray].set_point_position(1, lasers[ray].to_local(global_collision_point))
-			lasers[ray].default_color = Color.LIME_GREEN
+			lasers[ray].default_color = Color(0.961, 0.247, 0.588)
 			lasers[ray].self_modulate.a = 0.8
 		else:
 			var global_target_pos = rays[ray].to_global(rays[ray].target_position)
 			lasers[ray].set_point_position(1, lasers[ray].to_local(global_target_pos))
-			lasers[ray].default_color = Color.AQUA
+			lasers[ray].default_color = Color(0.725, 0.537, 0.925)
 			lasers[ray].self_modulate.a = 0.2
 
 #func _on_input_event(_viewport, _event, _shape_idx):

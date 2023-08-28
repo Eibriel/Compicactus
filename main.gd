@@ -3,6 +3,7 @@ extends Node
 var nodes: Array[Area2D]
 
 @onready var game_node := $Game
+@onready var lexeme_list = $LexemeList
 #@onready var camera := $Game/Camera3D
 #@onready var cursor3D = $Game/CSGSphere3D
 @onready var buttons := $UI/MarginContainer/Buttons
@@ -34,8 +35,17 @@ func _ready():
 	#sub_viewport.add_child(game_2)
 	#compicactus_anim.play("Action-07-Swinging")
 	var hint_text := ""
+	var pos_y := 100
 	for lexeme in Global.lexemes:
-		hint_text += "%s %s\n" % [lexeme.name, lexeme.code]
+		#hint_text += "%s %s\n" % [lexeme.name, lexeme.code]
+		var tmr_node: Area2D = TmrNode.instantiate()
+		tmr_node.position = Global.cursor2d_pos
+		tmr_node.label = lexeme.label
+		tmr_node.code = lexeme.code
+		tmr_node.position = Vector2(100, pos_y)
+		tmr_node.connections_amount = 0
+		lexeme_list.add_child(tmr_node)
+		pos_y += 200
 	hint_text += "\n\n"
 	hint_text += "s: %s\n" % InputMap.action_get_events("SquareShape")[0].as_text()
 	hint_text += "c: %s\n" % InputMap.action_get_events("CircleShape")[0].as_text()
@@ -90,6 +100,10 @@ func _input(event):
 	elif event.is_action_pressed("TriangleShape"):
 		selected_shapes += "t"
 		joypad_buttons[getShapeButton("TriangleShape")].text = "(T)"
+	elif event.is_action_pressed("LexemeDown"):
+		lexeme_list.position.y += 200
+	elif event.is_action_pressed("LexemeUp"):
+		lexeme_list.position.y -= 200
 
 func _process(_delta):
 	var joyvector := Vector2.ZERO
@@ -97,7 +111,7 @@ func _process(_delta):
 	joyvector.y = Input.get_action_strength("CursorDown") - Input.get_action_strength("CursorUp")
 	#label_score.text = "%f" % Input.get_action_strength("MoveCursorRight")
 	#joyvector = joyvector.normalized()
-	cursor.position += joyvector * 3
+	cursor.position += joyvector * _delta * 300
 	if joyvector.length() > 0:
 		if selected_shapes.length() > 0:
 			print(selected_shapes)
@@ -113,6 +127,7 @@ func _process(_delta):
 		tmr_node.connect("input_event", _on_input_event.bind(tmr_node))
 		var lexeme = node_to_add
 		tmr_node.label = lexeme.label
+		tmr_node.code = lexeme.code
 		tmr_node.connections_amount = lexeme.connections_amount
 		game_node.add_child(tmr_node)
 		#tmr_node.grabbed = true

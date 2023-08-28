@@ -1,10 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://del56tde6l7jx"]
+[gd_scene load_steps=6 format=3 uid="uid://del56tde6l7jx"]
 
 [ext_resource type="Script" path="res://tmr_node.gd" id="1_l5csm"]
-[ext_resource type="Texture2D" uid="uid://d21jctxoy8kfu" path="res://icon.svg" id="2_kivl1"]
+[ext_resource type="Texture2D" uid="uid://hu5ceomt3v01" path="res://images/ui/ui_atlas_01.png" id="2_llrqk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lfa1s"]
-size = Vector2(68, 68)
+size = Vector2(129, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0a8tb"]
+atlas = ExtResource("2_llrqk")
+region = Rect2(212, 30, 46, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qqp7o"]
+atlas = ExtResource("2_llrqk")
+region = Rect2(137, 11, 60, 61)
 
 [node name="TMRNode" type="Area2D"]
 linear_damp = 50.0
@@ -12,29 +20,67 @@ angular_damp = 50.0
 script = ExtResource("1_l5csm")
 
 [node name="CollisionShape3D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_lfa1s")
 
-[node name="Icon" type="Sprite2D" parent="."]
-modulate = Color(0.109804, 0.109804, 0.109804, 1)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_kivl1")
+[node name="Label" type="Node2D" parent="."]
+position = Vector2(0, 54)
 
-[node name="Label" type="Label" parent="."]
+[node name="LabelBackground" type="Sprite2D" parent="Label"]
+position = Vector2(1, 23)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_0a8tb")
+
+[node name="TMRLabel" type="Label" parent="Label"]
+unique_name_in_owner = true
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -21.0
-offset_top = -13.0
-offset_right = 21.0
-offset_bottom = 13.0
+offset_left = -37.5
+offset_top = 0.5
+offset_right = 39.5
+offset_bottom = 45.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
 text = "Label"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Shapes" type="Node2D" parent="."]
+position = Vector2(0, -45)
+
+[node name="LabelBackground" type="Sprite2D" parent="Shapes"]
+position = Vector2(1, -18)
+rotation = 3.14159
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_0a8tb")
+
+[node name="ShapesLabel" type="Label" parent="Shapes"]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.5
+offset_top = -50.0
+offset_right = 39.5
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "------"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Background" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_qqp7o")
 
 [node name="LasersNode" type="Node2D" parent="."]
 
