@@ -4,14 +4,26 @@ extends Area2D
 @export var code := "------"
 @export_range(0, 5) var connections_amount := 3
 
-@onready var lasers_node = $LasersNode
-@onready var rays_node = $RaysNode
-@onready var label2d = %TMRLabel
-@onready var code_label = %ShapesLabel
+@onready var lasers_node := $LasersNode
+@onready var rays_node := $RaysNode
+@onready var label2d := %TMRLabel
+#@onready var code_label = %ShapesLabel
 
+@onready var shape_sprites: Array[Sprite2D] = [
+	$Shapes/Shape01,
+	$Shapes/Shape02,
+	$Shapes/Shape03,
+	$Shapes/Shape04,
+	$Shapes/Shape05
+]
 
 var mat_laser_idle = preload("res://materials/laser_idle.tres")
 var mat_laser_active = preload("res://materials/laser_active.tres")
+
+var circle_texture = preload("res://atlas/circle.tres")
+var cross_texture = preload("res://atlas/cross.tres")
+var square_texture = preload("res://atlas/square.tres")
+var triangle_texture = preload("res://atlas/triangle.tres")
 
 var grabbed := false
 var mouse_position := Vector2(0,0)
@@ -25,15 +37,15 @@ const line_resolution = 16
 const line_radius = 0.05
 
 var laser_positions = [
-	[Vector2(-0.4, -0.2)*150, Vector2(-1.7, -0.7)*150],
-	[Vector2(-0.4, 0.2)*150, Vector2(-1.7, 0.7)*150],
-	[Vector2(-0.4, 0)*150, Vector2(-1.7, 0)*150],
+	[Vector2(-0.4, -0.2)*300, Vector2(-1.7, -0.7)*300],
+	[Vector2(-0.4, 0.2)*300, Vector2(-1.7, 0.7)*300],
+	[Vector2(-0.4, 0)*300, Vector2(-1.7, 0)*300],
 ]
 
 func _ready():
 	for n in connections_amount:
 		var laser := Line2D.new()
-		laser.width = 12
+		laser.width = 24
 		laser.add_point(laser_positions[n][0])
 		laser.add_point(laser_positions[n][1])
 		lasers.append(laser)
@@ -54,7 +66,19 @@ func _physics_process(_delta):
 
 func _process(_delta):
 	label2d.text = label
-	code_label.text = code
+	#code_label.text = code
+	for s in shape_sprites:
+		s.texture = null
+	for n in code.length():
+		match code[n]:
+			"s":
+				shape_sprites[n].texture = square_texture
+			"c":
+				shape_sprites[n].texture = circle_texture
+			"t":
+				shape_sprites[n].texture = triangle_texture
+			"x":
+				shape_sprites[n].texture = cross_texture
 	for ray in connections_amount:
 		var start_point = rays[ray].position
 		if rays[ray].is_colliding():

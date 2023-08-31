@@ -1,43 +1,70 @@
 [gd_scene load_steps=10 format=3 uid="uid://dc7w0kti6q4gc"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ffvtq"]
-[ext_resource type="Texture2D" uid="uid://h7bwjte6g4hj" path="res://images/backgrounds/background_02.png" id="2_l8esi"]
+[ext_resource type="Texture2D" uid="uid://dw6yijggh3wvr" path="res://images/backgrounds/background_05.jpg" id="2_1ft4s"]
+[ext_resource type="Texture2D" uid="uid://dejlx3m8hmvkg" path="res://atlas/triangle.tres" id="4_4sj3q"]
 [ext_resource type="Texture2D" uid="uid://hu5ceomt3v01" path="res://images/ui/ui_atlas_01.png" id="4_rehcg"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dijgl"]
-atlas = ExtResource("4_rehcg")
-region = Rect2(3, 1, 16, 17)
+[ext_resource type="Texture2D" uid="uid://bg3ijp8kky74j" path="res://atlas/square.tres" id="5_lvmw8"]
+[ext_resource type="Texture2D" uid="uid://bkqm7cgmdbvbq" path="res://atlas/cross.tres" id="6_0iwvu"]
+[ext_resource type="Texture2D" uid="uid://diddejeoogj65" path="res://atlas/circle.tres" id="7_cj62o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yvdyo"]
 atlas = ExtResource("4_rehcg")
-region = Rect2(26, 0, 58, 57)
+region = Rect2(157, 2, 418, 420)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_p4gvy"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_dijgl"]
 atlas = ExtResource("4_rehcg")
-region = Rect2(93, 24, 17, 18)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yplgf"]
-atlas = ExtResource("4_rehcg")
-region = Rect2(95, 7, 14, 15)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fn2di"]
-atlas = ExtResource("4_rehcg")
-region = Rect2(116, 26, 14, 15)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_c2tro"]
-atlas = ExtResource("4_rehcg")
-region = Rect2(116, 7, 14, 16)
+region = Rect2(13, 8, 124, 141)
 
 [node name="MainNode" type="Node"]
 script = ExtResource("1_ffvtq")
 
-[node name="Background01" type="Sprite2D" parent="."]
-texture = ExtResource("2_l8esi")
+[node name="BackBackground" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Background02" type="TextureRect" parent="BackBackground"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_1ft4s")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterNode" type="Node2D" parent="Control"]
+
+[node name="Window" type="Sprite2D" parent="Control/CenterNode"]
+modulate = Color(0.784314, 0.423529, 0.65098, 1)
+scale = Vector2(10, 10)
+texture = ExtResource("2_1ft4s")
+
+[node name="Game" type="Node2D" parent="Control/CenterNode"]
+position = Vector2(-1920, -1080)
+
+[node name="GamepadButtons" type="Sprite2D" parent="Control/CenterNode"]
+visible = false
+position = Vector2(651, 259)
+scale = Vector2(4, 4)
+texture = SubResource("AtlasTexture_yvdyo")
 centered = false
-
-[node name="Game" type="Node2D" parent="."]
-
-[node name="LexemeList" type="Node2D" parent="."]
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -47,41 +74,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-
-[node name="Cursor" type="Sprite2D" parent="UI"]
-scale = Vector2(4, 4)
-texture = SubResource("AtlasTexture_dijgl")
-centered = false
-
-[node name="GamepadButtons" type="Sprite2D" parent="UI"]
-position = Vector2(1611, 799)
-scale = Vector2(4, 4)
-texture = SubResource("AtlasTexture_yvdyo")
-centered = false
-
-[node name="GamepadButton_Triangle" type="Sprite2D" parent="UI"]
-position = Vector2(1695, 809)
-scale = Vector2(4, 4)
-texture = SubResource("AtlasTexture_p4gvy")
-centered = false
-
-[node name="GamepadButton_Square" type="Sprite2D" parent="UI"]
-position = Vector2(1636, 883)
-scale = Vector2(4, 4)
-texture = SubResource("AtlasTexture_yplgf")
-centered = false
-
-[node name="GamepadButton_Cross" type="Sprite2D" parent="UI"]
-position = Vector2(1697, 945)
-scale = Vector2(4, 4)
-texture = SubResource("AtlasTexture_fn2di")
-centered = false
-
-[node name="GamepadButton_Circle" type="Sprite2D" parent="UI"]
-position = Vector2(1764, 880)
-scale = Vector2(4, 4)
-texture = SubResource("AtlasTexture_c2tro")
-centered = false
 
 [node name="MarginContainer" type="MarginContainer" parent="UI"]
 visible = false
@@ -119,6 +111,49 @@ offset_right = -97.0
 offset_bottom = -100.0
 grow_horizontal = 0
 grow_vertical = 0
+
+[node name="Control3" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+
+[node name="LexemeList" type="Node2D" parent="UI/Control3"]
+position = Vector2(0, -1040)
+
+[node name="Control2" type="Control" parent="UI"]
+layout_mode = 1
+anchor_left = 0.899479
+anchor_top = 0.843518
+anchor_right = 0.899479
+anchor_bottom = 0.843518
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="GamepadButtons" type="Sprite2D" parent="UI/Control2"]
+position = Vector2(-10, -8)
+texture = SubResource("AtlasTexture_yvdyo")
+
+[node name="GamepadButton_Triangle" type="Sprite2D" parent="UI/Control2"]
+position = Vector2(-6, -143)
+texture = ExtResource("4_4sj3q")
+
+[node name="GamepadButton_Square" type="Sprite2D" parent="UI/Control2"]
+position = Vector2(-125, -9)
+texture = ExtResource("5_lvmw8")
+
+[node name="GamepadButton_Cross" type="Sprite2D" parent="UI/Control2"]
+position = Vector2(-9, 108)
+texture = ExtResource("6_0iwvu")
+
+[node name="GamepadButton_Circle" type="Sprite2D" parent="UI/Control2"]
+position = Vector2(105, -8)
+texture = ExtResource("7_cj62o")
 
 [node name="Control" type="Control" parent="UI"]
 visible = false
@@ -196,7 +231,11 @@ offset_left = -148.0
 offset_right = 148.0
 offset_bottom = 52.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 80
 text = "Compicactus - Development version
 some assets are borrowed as reference!"
 horizontal_alignment = 1
+
+[node name="Cursor" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_dijgl")
+centered = false

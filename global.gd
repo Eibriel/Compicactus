@@ -70,7 +70,7 @@ const lexemes = [
 		"name": "To sleep",
 		"label": "sleep",
 		"category": "Verb",
-		"connections_amount": 2,
+		"connections_amount": 1,
 		"syntactic-structure": {
 			"SUBJECT": "Noun",
 			"DIRECTOBJECT": "Noun" #optional
