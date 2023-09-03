@@ -1,12 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://dc7w0kti6q4gc"]
+[gd_scene load_steps=12 format=3 uid="uid://dc7w0kti6q4gc"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ffvtq"]
 [ext_resource type="Texture2D" uid="uid://dw6yijggh3wvr" path="res://images/backgrounds/background_05.jpg" id="2_1ft4s"]
+[ext_resource type="Texture2D" uid="uid://c66lr86xtnucr" path="res://images/backgrounds/background_01.png" id="3_4nfhf"]
 [ext_resource type="Texture2D" uid="uid://dejlx3m8hmvkg" path="res://atlas/triangle.tres" id="4_4sj3q"]
 [ext_resource type="Texture2D" uid="uid://hu5ceomt3v01" path="res://images/ui/ui_atlas_01.png" id="4_rehcg"]
 [ext_resource type="Texture2D" uid="uid://bg3ijp8kky74j" path="res://atlas/square.tres" id="5_lvmw8"]
 [ext_resource type="Texture2D" uid="uid://bkqm7cgmdbvbq" path="res://atlas/cross.tres" id="6_0iwvu"]
 [ext_resource type="Texture2D" uid="uid://diddejeoogj65" path="res://atlas/circle.tres" id="7_cj62o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4cdkt"]
+atlas = ExtResource("4_rehcg")
+region = Rect2(1531, 19, 124, 127)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yvdyo"]
 atlas = ExtResource("4_rehcg")
@@ -54,10 +59,15 @@ grow_vertical = 2
 [node name="Window" type="Sprite2D" parent="Control/CenterNode"]
 modulate = Color(0.784314, 0.423529, 0.65098, 1)
 scale = Vector2(10, 10)
-texture = ExtResource("2_1ft4s")
+texture = ExtResource("3_4nfhf")
 
 [node name="Game" type="Node2D" parent="Control/CenterNode"]
 position = Vector2(-1920, -1080)
+
+[node name="Cursor" type="Sprite2D" parent="Control/CenterNode"]
+z_index = 5
+position = Vector2(-3, -2)
+texture = SubResource("AtlasTexture_4cdkt")
 
 [node name="GamepadButtons" type="Sprite2D" parent="Control/CenterNode"]
 visible = false
@@ -236,6 +246,8 @@ text = "Compicactus - Development version
 some assets are borrowed as reference!"
 horizontal_alignment = 1
 
-[node name="Cursor" type="Sprite2D" parent="."]
+[node name="Pointer" type="Sprite2D" parent="."]
+visible = false
+z_index = 5
 texture = SubResource("AtlasTexture_dijgl")
 centered = false
