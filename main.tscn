@@ -247,7 +247,6 @@ some assets are borrowed as reference!"
 horizontal_alignment = 1
 
 [node name="Pointer" type="Sprite2D" parent="."]
-visible = false
 z_index = 5
 texture = SubResource("AtlasTexture_dijgl")
 centered = false

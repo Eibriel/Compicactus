@@ -2,6 +2,10 @@ extends Node
 
 var cursor2d_pos := Vector2()
 
+var instances: Array[Area2D] = []
+
+
+
 const lexemes = [
 	{
 		"name": "1st person",

@@ -3,6 +3,7 @@ extends Area2D
 @export var label := "Label"
 @export var code := "------"
 @export_range(0, 5) var connections_amount := 3
+@export var connected := true
 
 var last_code := "------"
 
@@ -56,10 +57,14 @@ func _ready():
 
 func _physics_process(_delta):
 	if grabbed:
+		#var tween = create_tween()
+		#tween.tween_property(self, "global_position", Global.cursor2d_pos, 0.1)
 		global_position = Global.cursor2d_pos
+		#grabbed = false
 
 func _process(_delta):
 	update()
+	updateConnections()
 
 func checkRays():
 	for ray in connections_amount:
@@ -83,6 +88,43 @@ func update():
 		n.visible = false
 #	for n in connections_amount:
 #		node_sprites[n].visible = true
+
+var connected_to: Array[Area2D] = []
+func updateConnections():
+	lasers.resize(0)
+	for c in lasers_node.get_children():
+		c.free()
+	if not connected: return
+	if !codeExists(code): return
+	connected_to.resize(0)
+	var lexeme = codeToLexeme(code)
+	for con in lexeme["syntactic-structure"]:
+		var type = lexeme["syntactic-structure"][con]
+		findBestNode(type)
+
+func sort_distance(a:Area2D, b:Area2D):
+	var distance_a = a.position.distance_to(position)
+	var distance_b = b.position.distance_to(position)
+	if distance_a < distance_b:
+		return true
+	return false
+
+func findBestNode(nodeType:String):
+	Global.instances.sort_custom(sort_distance)
+	for instance in Global.instances:
+		if instance == self: continue
+		if connected_to.has(instance): continue
+		if !codeExists(instance.code): continue
+		var lexeme = codeToLexeme(instance.code)
+		if lexeme.category != nodeType: continue
+		var laser := Line2D.new()
+		laser.width = 24
+		laser.add_point(lasers_node.to_local(instance.global_position))
+		laser.add_point(lasers_node.to_local(global_position))
+		lasers.append(laser)
+		lasers_node.add_child(laser)
+		connected_to.append(instance)
+		break
 
 func updateOld():
 	updateCode()

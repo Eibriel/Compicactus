@@ -37,8 +37,8 @@ func _ready():
 	var pos_y := 50
 	for lexeme in Global.lexemes:
 		var tmr_node: Area2D = TmrNode.instantiate()
-		tmr_node.position = Global.cursor2d_pos
 		tmr_node.code = lexeme.code
+		tmr_node.connected = false
 		tmr_node.position = Vector2(200, pos_y)
 		lexeme_list.add_child(tmr_node)
 		pos_y += 400
@@ -103,6 +103,22 @@ func _input(event):
 		doneBuildingNode()
 		var tween = create_tween()
 		tween.tween_property(cursor, "position:x", cursor.position.x + 300, 0.1)
+	elif event.is_action_pressed("Grab"):
+		if grabbing:
+			grabbing = false
+			grabbing_tmr.grabbed = false
+		else:
+			var min_distance = null
+			var closest_instance = null
+			for instance in Global.instances:
+				var dist = instance.position.distance_to(Global.cursor2d_pos)
+				if min_distance == null or dist < min_distance:
+					min_distance = dist
+					closest_instance = instance
+			if closest_instance != null:
+				grabbing = true
+				grabbing_tmr = closest_instance
+				grabbing_tmr.grabbed = true
 
 func doneBuildingNode():
 	selected_shapes = ""
@@ -128,16 +144,18 @@ func _process(_delta):
 		if adding_node == null:
 			print(selected_shapes)
 			var tmr_node: Area2D = TmrNode.instantiate()
-			tmr_node.position = game_node.to_local(center_node.to_global(Global.cursor2d_pos))
+			tmr_node.position = Global.cursor2d_pos
 			tmr_node.connect("input_event", _on_input_event.bind(tmr_node))
 			tmr_node.code = selected_shapes
 			game_node.add_child(tmr_node)
 			nodes.append(tmr_node)
+			Global.instances.append(tmr_node)
 			adding_node = tmr_node
 			print("Add child")
 	elif selected_shapes.length() > 1:
 		adding_node.code = selected_shapes
-	Global.cursor2d_pos = cursor.position
+	#Global.cursor2d_pos = cursor.position
+	Global.cursor2d_pos = game_node.to_local(center_node.to_global(cursor.position))
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
