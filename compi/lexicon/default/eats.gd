@@ -10,6 +10,9 @@ func _init():
 	}
 	code = "cs"
 
+# Adding instances  (move this to compi?)
+# Connect instances (move this to compi?)
+
 func generate_moves(tmr: CompiTMR):
 	var token_id = 0
 	var moves = []

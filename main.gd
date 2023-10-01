@@ -1,190 +1,177 @@
 extends Node
 
-var nodes: Array[Area2D]
+var lexemes:Lex
+var grid:Dictionary
+var grid_sprites:Dictionary
+var cursor_position:=Vector2i(2, 2)
 
-@onready var center_node = $Control/CenterNode
-@onready var game_node := $Control/CenterNode/Game
-@onready var lexeme_list = $UI/Control3/LexemeList
-#@onready var camera := $Game/Camera3D
-#@onready var cursor3D = $Game/CSGSphere3D
-@onready var buttons := $UI/MarginContainer/Buttons
-#@onready var compicactus_anim = $Game/Compicactus/AnimationPlayer
-@onready var pointer := $Pointer
-@onready var cursor = $Control/CenterNode/Cursor
-@onready var hint_text_label := $UI/MarginContainer/RichTextLabel
+@onready var lexeme_list = %LexemeList
+@onready var cursor = %Cursor
+@onready var grid_node = %Grid
+@onready var compicactus = %Compicactus
+@onready var logo_screen = %LogoScreen
+@onready var intro_screen = %IntroScreen
+@onready var pause_screen = %PauseScreen
+@onready var inventory_screen = %InventoryScreen
 
-@onready var joypad_up := $UI/Control/JoypadUp
-@onready var joypad_down := $UI/Control/JoypadDown
-@onready var joypad_left := $UI/Control/JoypadLeft
-@onready var joypad_right := $UI/Control/JoypadRight
-
-var TmrNode := preload("res://tmr_node.tscn")
-var grabbing := false
-var grabbing_tmr
-var adding_node: Area2D
-var selected_shapes := ""
+const grid_size:=Vector2i(4, 4)
 
 
-@onready var joypad_buttons: Array[Label] = [
-	joypad_down,
-	joypad_right,
-	joypad_left,
-	joypad_up,
-]
-	
 func _ready():
-	var hint_text := ""
-	var pos_y := 50
-	for lexeme in Global.lexemes:
-		var tmr_node: Area2D = TmrNode.instantiate()
-		tmr_node.code = lexeme.code
-		tmr_node.connected = false
-		tmr_node.position = Vector2(200, pos_y)
-		lexeme_list.add_child(tmr_node)
-		pos_y += 400
-	hint_text += "\n\n"
-	hint_text += "s: %s\n" % InputMap.action_get_events("SquareShape")[0].as_text()
-	hint_text += "c: %s\n" % InputMap.action_get_events("CircleShape")[0].as_text()
-	hint_text += "x: %s\n" % InputMap.action_get_events("CrossShape")[0].as_text()
-	hint_text += "t: %s\n" % InputMap.action_get_events("TriangleShape")[0].as_text()
-	hint_text_label.text = hint_text
-	
+	$Screens.visible = true
+	logo_screen.visible = true
+	intro_screen.visible = true
+	pause_screen.visible = false
+	inventory_screen.visible = false
+	compicactus.play("Idle")
+	populate_lexemes()
+	draw_lexemes()
+	draw_nodes()
+	for _x in 8:
+		for _y in 8:
+			var k = Vector2i(_x, _y)
+			grid[k] = 0
+			var s = Sprite2D.new()
+			s.position = k * 300
+			grid_sprites[k] = s
+			grid_node.add_child(s)
+	set_lexemes_position()
+	hide_logoscreen()
 
-func getShapeButton(action_name:String):
-	var info := InputMap.action_get_events(action_name)[0].as_text()
-	if info.begins_with("Joypad Button 0"):
-		return 0
-	elif info.begins_with("Joypad Button 1"):
-		return 1
-	elif info.begins_with("Joypad Button 2"):
-		return 2
-	elif info.begins_with("Joypad Button 3"):
-		return 3
-	return 3 #TODO should be different from 3
+func hide_logoscreen():
+	var tween := create_tween()
+	tween.tween_interval(2)
+	tween.tween_property(logo_screen, "modulate:a", 0, 1)
+	tween.tween_callback(func():
+			logo_screen.visible = false
+			ControlHandler.change_mode(ControlHandler.MODES.START_TITLE)
+			)
 
-func _input(event):
-	if event.is_action_pressed("Place"):
-		for node in nodes:
-			print(node.child_tmrs)
-	
-	joypad_buttons[getShapeButton("SquareShape")].text = "S"
-	joypad_buttons[getShapeButton("CircleShape")].text = "C"
-	joypad_buttons[getShapeButton("CrossShape")].text = "X"
-	joypad_buttons[getShapeButton("TriangleShape")].text = "T"
-	if event.is_action_pressed("CircleShape"):
-		selected_shapes += "c"
-		joypad_buttons[getShapeButton("CircleShape")].text = "(C)"
-	elif event.is_action_pressed("SquareShape"):
-		selected_shapes += "s"
-		joypad_buttons[getShapeButton("SquareShape")].text = "(S)"
-	elif event.is_action_pressed("CrossShape"):
-		selected_shapes += "x"
-		joypad_buttons[getShapeButton("CrossShape")].text = "(X)"
-	elif event.is_action_pressed("TriangleShape"):
-		selected_shapes += "t"
-		joypad_buttons[getShapeButton("TriangleShape")].text = "(T)"
-	
-	elif event.is_action_pressed("CursorDown"):
-		doneBuildingNode()
-		var tween = create_tween()
-		tween.tween_property(cursor, "position:y", cursor.position.y + 300, 0.1)
-	elif event.is_action_pressed("CursorUp"):
-		#cursor.position.y -= 100
-		doneBuildingNode()
-		var tween = create_tween()
-		tween.tween_property(cursor, "position:y", cursor.position.y - 300, 0.1)
-	elif event.is_action_pressed("CursorLeft"):
-		#cursor.position.x -= 100
-		doneBuildingNode()
-		var tween = create_tween()
-		tween.tween_property(cursor, "position:x", cursor.position.x - 300, 0.1)
-	elif event.is_action_pressed("CursorRight"):
-		#cursor.position.x += 100
-		doneBuildingNode()
-		var tween = create_tween()
-		tween.tween_property(cursor, "position:x", cursor.position.x + 300, 0.1)
-	elif event.is_action_pressed("Grab"):
-		if grabbing:
-			grabbing = false
-			grabbing_tmr.grabbed = false
-		else:
-			var min_distance = null
-			var closest_instance = null
-			for instance in Global.instances:
-				var dist = instance.position.distance_to(Global.cursor2d_pos)
-				if min_distance == null or dist < min_distance:
-					min_distance = dist
-					closest_instance = instance
-			if closest_instance != null:
-				grabbing = true
-				grabbing_tmr = closest_instance
-				grabbing_tmr.grabbed = true
+func draw_lexemes():
+	var pos_y = 300
+	for lid in lexemes.ids:
+		print(lid)
+		var t = load("res://atlas/lexeme_%s.tres" % lid)
+		var s = Sprite2D.new()
+		s.texture = t
+		s.scale = Vector2(0.7, 0.7)
+		s.position.x = pos_y
+		lexeme_list.add_child(s)
+		pos_y += 300
+	ControlHandler.connect("ui_event", _ui_event)
 
-func doneBuildingNode():
-	selected_shapes = ""
-	adding_node = null
+func set_lexemes_position():
+	lexeme_list.position.x = ((grid[cursor_position]+5) * -300) - 150
+	if grid[cursor_position] == 0:
+		grid_sprites[cursor_position].texture = null
+	else:
+		var lid = lexemes.ids[grid[cursor_position]-1]
+		var t = load("res://atlas/lexeme_%s.tres" % lid)
+		grid_sprites[cursor_position].texture = t
 
-func _process(_delta):
-	var panvector := Vector2.ZERO
-	panvector.x = Input.get_action_strength("PanRight") - Input.get_action_strength("PanLeft")
-	panvector.y = Input.get_action_strength("PanDown") - Input.get_action_strength("PanUp")
-	center_node.position -= panvector * _delta * 1000
-	
-	var joyvector := Vector2.ZERO
-	joyvector.x = Input.get_action_strength("PointerRight") - Input.get_action_strength("PointerLeft")
-	joyvector.y = Input.get_action_strength("PointerDown") - Input.get_action_strength("PointerUp")
-	#label_score.text = "%f" % Input.get_action_strength("MoveCursorRight")
-	#joyvector = joyvector.normalized()
-	#pointer.position += joyvector * _delta * 600
-	lexeme_list.position += joyvector * _delta * 1500
-	if joyvector.length() > 0:
-		selected_shapes = ""
-		adding_node = null
-	if selected_shapes.length() == 1:
-		if adding_node == null:
-			print(selected_shapes)
-			var tmr_node: Area2D = TmrNode.instantiate()
-			tmr_node.position = Global.cursor2d_pos
-			tmr_node.connect("input_event", _on_input_event.bind(tmr_node))
-			tmr_node.code = selected_shapes
-			game_node.add_child(tmr_node)
-			nodes.append(tmr_node)
-			Global.instances.append(tmr_node)
-			adding_node = tmr_node
-			print("Add child")
-	elif selected_shapes.length() > 1:
-		adding_node.code = selected_shapes
-	#Global.cursor2d_pos = cursor.position
-	Global.cursor2d_pos = game_node.to_local(center_node.to_global(cursor.position))
+func draw_nodes():
+	cursor.position = cursor_position * 300
 
-func _unhandled_input(event):
-	if event is InputEventMouseButton:
-		event = event as InputEventMouseButton
-		if event.pressed:
-			print("Press")
-			#if event.button_index == 2:
-			#	add_node = true
-		if !event.pressed:
-			grabbing = false
-	
-	if event is InputEventMouseMotion:
-		event = event as InputEventMouseMotion
-		getCursorPosition(event)
+func send_message():
+	for _x in 8:
+		for _y in 8:
+			var k = Vector2i(_x, _y)
+			grid[k] = 0
+			grid_sprites[k].texture = null
+	cursor_position = Vector2i(2, 2)
 
-func _on_input_event(_viewport:Node, event:InputEvent, _shape_idx:int, tmr_node:Area2D):
-	if grabbing: return
-	if event is InputEventMouseButton:
-		event = event as InputEventMouseButton
-		if event.pressed:
-			if event.button_index == 1:
-				tmr_node.grabbed = true
-				grabbing = true
+func _ui_event(event_code: int, event_strength: float):
+	print(event_code)
+	match event_code:
+		ControlHandler.EVENTS.LEXEME_RIGHT:
+			grid[cursor_position] += 1
+		ControlHandler.EVENTS.LEXEME_LEFT:
+			grid[cursor_position] -= 1
+		ControlHandler.EVENTS.CURSOR_LEFT:
+			cursor_position.x -= 1
+		ControlHandler.EVENTS.CURSOR_RIGHT:
+			cursor_position.x += 1
+		ControlHandler.EVENTS.CURSOR_UP:
+			cursor_position.y -= 1
+		ControlHandler.EVENTS.CURSOR_DOWN:
+			cursor_position.y += 1
+		ControlHandler.EVENTS.SEND_MESSAGE:
+			send_message()
+		ControlHandler.EVENTS.LEAVING_TITLE:
+			leave_title()
+		ControlHandler.EVENTS.OPEN_GAME_MENU:
+			open_game_menu()
+		ControlHandler.EVENTS.CLOSE_GAME_MENU:
+			close_game_menu()
+		ControlHandler.EVENTS.MENU_DOWN:
+			get_tree().quit()
+		ControlHandler.EVENTS.OPEN_INVENTORY_MENU:
+			open_inventory_menu()
+		ControlHandler.EVENTS.CLOSE_INVENTORY_MENU:
+			close_inventory_menu()
+	cursor_position.x = max(cursor_position.x, 0)
+	cursor_position.y = max(cursor_position.y, 0)
+	cursor_position.x = min(cursor_position.x, grid_size.x)
+	cursor_position.y = min(cursor_position.y, grid_size.y)
+	grid[cursor_position] = max(grid[cursor_position], 0)
+	draw_nodes()
+	set_lexemes_position()
 
-func _on_lexeme_button_up(lexeme):
-	pass
-#	add_node = true
-#	node_to_add = lexeme
+func open_game_menu():
+	var tween := create_tween()
+	pause_screen.modulate.a = 0.0
+	pause_screen.visible = true
+	tween.tween_property(pause_screen, "modulate:a", 1, 0.2)
+	tween.tween_callback(func():
+		ControlHandler.change_mode(ControlHandler.MODES.GAME_MENU)
+		)
 
-func getCursorPosition(event):
-	pointer.position = event.position
+func close_game_menu():
+	var tween := create_tween()
+	pause_screen.modulate.a = 1.0
+	pause_screen.visible = true
+	tween.tween_property(pause_screen, "modulate:a", 0, 0.2)
+	tween.tween_callback(func():
+		pause_screen.visible = false
+		ControlHandler.change_mode(ControlHandler.MODES.SELECT_LEXEME)
+		)
 
+func open_inventory_menu():
+	var tween := create_tween()
+	inventory_screen.modulate.a = 0.0
+	inventory_screen.visible = true
+	tween.tween_property(inventory_screen, "modulate:a", 1, 0.2)
+	tween.tween_callback(func():
+		ControlHandler.change_mode(ControlHandler.MODES.INVENTORY_MENU)
+		)
+
+func close_inventory_menu():
+	var tween := create_tween()
+	inventory_screen.modulate.a = 1.0
+	inventory_screen.visible = true
+	tween.tween_property(inventory_screen, "modulate:a", 0, 0.2)
+	tween.tween_callback(func():
+		inventory_screen.visible = false
+		ControlHandler.change_mode(ControlHandler.MODES.SELECT_LEXEME)
+		)
+
+func leave_title():
+	var tween := create_tween()
+	tween.tween_property(intro_screen, "modulate:a", 0, 1)
+	tween.tween_callback(func():
+		intro_screen.visible = false
+		ControlHandler.change_mode(ControlHandler.MODES.SELECT_LEXEME)
+		)
+
+func populate_lexemes():
+	lexemes = Lex.new()
+	(lexemes.build("apple")
+	.build("i")
+	.build("you")
+	.build("have")
+	.build("not_have")
+	.build("to_own")
+	.build("like")
+	.build("not_like")
+	.build("money")
+	.build("tree"))

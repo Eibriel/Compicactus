@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bsukwts2iuvua"]
+
+[ext_resource type="PackedScene" uid="uid://c8onp4uhe50d4" path="res://models/compicactus.glb" id="1_gwukd"]
+[ext_resource type="Script" path="res://compicactus.gd" id="1_yhj14"]
+
+[node name="Compicactus" type="Node3D"]
+script = ExtResource("1_yhj14")
+
+[node name="compicactus" parent="." instance=ExtResource("1_gwukd")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -2.153, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.97)
+projection = 1
+size = 6.0

@@ -1,252 +1,233 @@
-[gd_scene load_steps=12 format=3 uid="uid://dc7w0kti6q4gc"]
+[gd_scene load_steps=10 format=3 uid="uid://m4vtkuxwx5o"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ffvtq"]
-[ext_resource type="Texture2D" uid="uid://dw6yijggh3wvr" path="res://images/backgrounds/background_05.jpg" id="2_1ft4s"]
-[ext_resource type="Texture2D" uid="uid://c66lr86xtnucr" path="res://images/backgrounds/background_01.png" id="3_4nfhf"]
-[ext_resource type="Texture2D" uid="uid://dejlx3m8hmvkg" path="res://atlas/triangle.tres" id="4_4sj3q"]
+[ext_resource type="Texture2D" uid="uid://ttwrnkhfka8k" path="res://atlas/bottom_background.tres" id="2_cxs0f"]
+[ext_resource type="Texture2D" uid="uid://dwto0xia8seqh" path="res://images/backgrounds/background_01.png" id="3_4nfhf"]
+[ext_resource type="Texture2D" uid="uid://dfj876t25rnh" path="res://atlas/compi_background.tres" id="3_vi3am"]
 [ext_resource type="Texture2D" uid="uid://hu5ceomt3v01" path="res://images/ui/ui_atlas_01.png" id="4_rehcg"]
-[ext_resource type="Texture2D" uid="uid://bg3ijp8kky74j" path="res://atlas/square.tres" id="5_lvmw8"]
-[ext_resource type="Texture2D" uid="uid://bkqm7cgmdbvbq" path="res://atlas/cross.tres" id="6_0iwvu"]
-[ext_resource type="Texture2D" uid="uid://diddejeoogj65" path="res://atlas/circle.tres" id="7_cj62o"]
+[ext_resource type="Texture2D" uid="uid://dejlx3m8hmvkg" path="res://atlas/triangle.tres" id="5_8pcgk"]
+[ext_resource type="PackedScene" uid="uid://bsukwts2iuvua" path="res://compicactus.tscn" id="7_6lgj7"]
+[ext_resource type="Texture2D" uid="uid://dyewnidttscvu" path="res://images/EibrielLogo.png" id="8_xc56p"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4cdkt"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_4156l"]
 atlas = ExtResource("4_rehcg")
 region = Rect2(1531, 19, 124, 127)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yvdyo"]
-atlas = ExtResource("4_rehcg")
-region = Rect2(157, 2, 418, 420)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dijgl"]
-atlas = ExtResource("4_rehcg")
-region = Rect2(13, 8, 124, 141)
-
-[node name="MainNode" type="Node"]
+[node name="main" type="Node"]
 script = ExtResource("1_ffvtq")
 
-[node name="BackBackground" type="Control" parent="."]
+[node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+size_flags_horizontal = 4
 
-[node name="Background02" type="TextureRect" parent="BackBackground"]
+[node name="Background02" type="TextureRect" parent="Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_1ft4s")
-expand_mode = 1
-stretch_mode = 6
+texture = ExtResource("3_4nfhf")
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
+[node name="Control3" type="Control" parent="Control"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="CenterNode" type="Node2D" parent="Control"]
-
-[node name="Window" type="Sprite2D" parent="Control/CenterNode"]
-modulate = Color(0.784314, 0.423529, 0.65098, 1)
-scale = Vector2(10, 10)
-texture = ExtResource("3_4nfhf")
-
-[node name="Game" type="Node2D" parent="Control/CenterNode"]
-position = Vector2(-1920, -1080)
-
-[node name="Cursor" type="Sprite2D" parent="Control/CenterNode"]
-z_index = 5
-position = Vector2(-3, -2)
-texture = SubResource("AtlasTexture_4cdkt")
-
-[node name="GamepadButtons" type="Sprite2D" parent="Control/CenterNode"]
-visible = false
-position = Vector2(651, 259)
-scale = Vector2(4, 4)
-texture = SubResource("AtlasTexture_yvdyo")
-centered = false
-
-[node name="UI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="UI"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 51.0
-offset_top = 57.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/MarginContainer"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_font_sizes/normal_font_size = 30
-text = "dsfsdf"
-
-[node name="Buttons" type="VBoxContainer" parent="UI/MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-mouse_filter = 0
-
-[node name="MarginContainer2" type="MarginContainer" parent="UI"]
-visible = false
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -344.0
-offset_top = -312.0
-offset_right = -97.0
-offset_bottom = -100.0
-grow_horizontal = 0
-grow_vertical = 0
-
-[node name="Control3" type="Control" parent="UI"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
+offset_left = -20.0
 offset_top = -20.0
-offset_right = 40.0
+offset_right = 20.0
 offset_bottom = 20.0
-grow_vertical = 2
-
-[node name="LexemeList" type="Node2D" parent="UI/Control3"]
-position = Vector2(0, -1040)
-
-[node name="Control2" type="Control" parent="UI"]
-layout_mode = 1
-anchor_left = 0.899479
-anchor_top = 0.843518
-anchor_right = 0.899479
-anchor_bottom = 0.843518
 grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_use_anchors_ = true
 
-[node name="GamepadButtons" type="Sprite2D" parent="UI/Control2"]
-position = Vector2(-10, -8)
-texture = SubResource("AtlasTexture_yvdyo")
+[node name="Grid" type="Node2D" parent="Control/Control3"]
+unique_name_in_owner = true
+position = Vector2(-1661, -846)
 
-[node name="GamepadButton_Triangle" type="Sprite2D" parent="UI/Control2"]
-position = Vector2(-6, -143)
-texture = ExtResource("4_4sj3q")
+[node name="Cursor" type="Sprite2D" parent="Control/Control3/Grid"]
+unique_name_in_owner = true
+z_index = 1
+texture = SubResource("AtlasTexture_4156l")
 
-[node name="GamepadButton_Square" type="Sprite2D" parent="UI/Control2"]
-position = Vector2(-125, -9)
-texture = ExtResource("5_lvmw8")
-
-[node name="GamepadButton_Cross" type="Sprite2D" parent="UI/Control2"]
-position = Vector2(-9, 108)
-texture = ExtResource("6_0iwvu")
-
-[node name="GamepadButton_Circle" type="Sprite2D" parent="UI/Control2"]
-position = Vector2(105, -8)
-texture = ExtResource("7_cj62o")
-
-[node name="Control" type="Control" parent="UI"]
-visible = false
-layout_mode = 1
-anchor_left = 0.818
-anchor_top = 0.749
-anchor_right = 0.919
-anchor_bottom = 0.892
-offset_left = 0.439941
-offset_top = 0.0799561
-offset_right = 0.519897
-offset_bottom = -0.360046
-grow_horizontal = 0
-grow_vertical = 0
-
-[node name="JoypadUp" type="Label" parent="UI/Control"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -29.0
-offset_right = 29.0
-offset_bottom = 26.0
-grow_horizontal = 2
-text = "UP"
-horizontal_alignment = 1
-
-[node name="JoypadDown" type="Label" parent="UI/Control"]
+[node name="Control" type="Control" parent="Control"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -29.0
-offset_top = -26.0
-offset_right = 29.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "DOWN"
-horizontal_alignment = 1
 
-[node name="JoypadLeft" type="Label" parent="UI/Control"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -13.0
-offset_right = 58.0
-offset_bottom = 13.0
-grow_vertical = 2
-text = "LEFT"
-horizontal_alignment = 1
+[node name="UiAtlas02" type="Sprite2D" parent="Control/Control"]
+position = Vector2(51, -119)
+texture = ExtResource("2_cxs0f")
 
-[node name="JoypadRight" type="Label" parent="UI/Control"]
+[node name="LexemeList" type="Node2D" parent="Control/Control"]
+unique_name_in_owner = true
+position = Vector2(-1656, -72)
+
+[node name="Triangle" type="Sprite2D" parent="Control/Control"]
+position = Vector2(-1653, -233)
+rotation = -3.14159
+texture = ExtResource("5_8pcgk")
+
+[node name="Control2" type="Control" parent="Control"]
 layout_mode = 1
-anchors_preset = 6
+anchors_preset = 3
 anchor_left = 1.0
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -58.0
-offset_top = -13.0
-offset_bottom = 13.0
+anchor_bottom = 1.0
+offset_left = -51.0
+offset_top = -300.0
+offset_right = -11.0
+offset_bottom = -260.0
 grow_horizontal = 0
-grow_vertical = 2
-text = "RIGHT"
-horizontal_alignment = 1
+grow_vertical = 0
 
-[node name="DevVersionDisclaimer" type="Label" parent="."]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -148.0
-offset_right = 148.0
-offset_bottom = 52.0
+[node name="UiAtlas03" type="Sprite2D" parent="Control/Control2"]
+position = Vector2(-858, -881)
+texture = ExtResource("3_vi3am")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Control/Control2"]
+layout_mode = 0
+offset_left = -1461.0
+offset_top = -1082.0
+offset_right = 459.0
+offset_bottom = -2.0
+
+[node name="SubViewport" type="SubViewport" parent="Control/Control2/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="Compicactus" parent="Control/Control2/SubViewportContainer/SubViewport" instance=ExtResource("7_6lgj7")]
+unique_name_in_owner = true
+
+[node name="Screens" type="Control" parent="."]
+z_index = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 80
-text = "Compicactus - Development version
-some assets are borrowed as reference!"
-horizontal_alignment = 1
+grow_vertical = 2
 
-[node name="Pointer" type="Sprite2D" parent="."]
-z_index = 5
-texture = SubResource("AtlasTexture_dijgl")
-centered = false
+[node name="IntroScreen" type="Control" parent="Screens"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Screens/IntroScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0509804, 0.0156863, 0.0470588, 1)
+
+[node name="Label" type="Label" parent="Screens/IntroScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press A to start"
+
+[node name="PauseScreen" type="Control" parent="Screens"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Screens/PauseScreen"]
+modulate = Color(1, 1, 1, 0.737255)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0509804, 0.0156863, 0.0470588, 1)
+
+[node name="InventoryScreen" type="Control" parent="Screens"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Screens/InventoryScreen"]
+modulate = Color(1, 1, 1, 0.737255)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0509804, 0.0156863, 0.0470588, 1)
+
+[node name="LogoScreen" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="LogoScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0509804, 0.0156863, 0.0470588, 1)
+
+[node name="EibrielLogo" type="TextureRect" parent="LogoScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -825.5
+offset_top = -265.5
+offset_right = 825.5
+offset_bottom = 265.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_xc56p")
