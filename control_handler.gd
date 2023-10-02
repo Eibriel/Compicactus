@@ -32,7 +32,9 @@ const EVENTS = {
 	"MENU_BACK": 15,
 	
 	"OPEN_INVENTORY_MENU": 16,
-	"CLOSE_INVENTORY_MENU": 17
+	"CLOSE_INVENTORY_MENU": 17,
+	"INVENTORY_NEXT_PAGE": 18,
+	"INVENTORY_PREVIOUS_PAGE": 19,
 }
 
 const INPUT_MODE = {
@@ -105,9 +107,16 @@ func game_menu_input(event: InputEvent) -> void:
 		emit_signal("ui_event", EVENTS.MENU_LEFT, 1.0)
 	if event.is_action_pressed("menu_right"):
 		emit_signal("ui_event", EVENTS.MENU_RIGHT, 1.0)
+	if event.is_action_pressed("menu_select"):
+		emit_signal("ui_event", EVENTS.MENU_SELECT, 1.0)
 
 func inventory_menu_input(event: InputEvent) -> void:
 	if event.is_action_pressed("open_inventory_menu"):
 		emit_signal("ui_event", EVENTS.CLOSE_INVENTORY_MENU, 1.0)
 	if event.is_action_pressed("menu_back"):
 		emit_signal("ui_event", EVENTS.CLOSE_INVENTORY_MENU, 1.0)
+	
+	if event.is_action_pressed("lexeme_right"):
+		emit_signal("ui_event", EVENTS.INVENTORY_NEXT_PAGE, 1.0)
+	if event.is_action_pressed("lexeme_left"):
+		emit_signal("ui_event", EVENTS.INVENTORY_PREVIOUS_PAGE, 1.0)

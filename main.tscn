@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://m4vtkuxwx5o"]
+[gd_scene load_steps=27 format=3 uid="uid://m4vtkuxwx5o"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ffvtq"]
 [ext_resource type="Texture2D" uid="uid://ttwrnkhfka8k" path="res://atlas/bottom_background.tres" id="2_cxs0f"]
@@ -7,7 +7,24 @@
 [ext_resource type="Texture2D" uid="uid://hu5ceomt3v01" path="res://images/ui/ui_atlas_01.png" id="4_rehcg"]
 [ext_resource type="Texture2D" uid="uid://dejlx3m8hmvkg" path="res://atlas/triangle.tres" id="5_8pcgk"]
 [ext_resource type="PackedScene" uid="uid://bsukwts2iuvua" path="res://compicactus.tscn" id="7_6lgj7"]
+[ext_resource type="Texture2D" uid="uid://v8ingcuhq63p" path="res://atlas/lexeme_apple.tres" id="8_inof7"]
 [ext_resource type="Texture2D" uid="uid://dyewnidttscvu" path="res://images/EibrielLogo.png" id="8_xc56p"]
+[ext_resource type="Texture2D" uid="uid://bjspqo4gfpcg5" path="res://atlas/lexeme_have.tres" id="9_prhk2"]
+[ext_resource type="Texture2D" uid="uid://c1jbhvf68xs7n" path="res://atlas/lexeme_i.tres" id="10_0it6b"]
+[ext_resource type="Texture2D" uid="uid://blstkfax0iqa6" path="res://atlas/lexeme_like.tres" id="11_14p0t"]
+[ext_resource type="Texture2D" uid="uid://mexjmldh1pjw" path="res://atlas/lexeme_money.tres" id="12_wd8hb"]
+[ext_resource type="Texture2D" uid="uid://ca6mllp5vv6e1" path="res://atlas/lexeme_not_have.tres" id="13_20ytd"]
+[ext_resource type="Texture2D" uid="uid://dnaf85hta0b07" path="res://atlas/lexeme_not_like.tres" id="14_jcobk"]
+[ext_resource type="Texture2D" uid="uid://4nn3x5h1ctt6" path="res://atlas/lexeme_to_own.tres" id="15_mkx50"]
+[ext_resource type="Texture2D" uid="uid://dirjbmkypgo6p" path="res://atlas/lexeme_tree.tres" id="16_oc1qv"]
+[ext_resource type="Texture2D" uid="uid://cc2aggyhs5g27" path="res://atlas/lexeme_you.tres" id="17_vie2v"]
+[ext_resource type="Texture2D" uid="uid://bbhgk3a13i8st" path="res://atlas/lexeme_event.tres" id="18_c8sii"]
+[ext_resource type="Texture2D" uid="uid://brg0ece2u41ae" path="res://atlas/lexeme_to_eat.tres" id="19_10edw"]
+[ext_resource type="Texture2D" uid="uid://chd6n3835tcl3" path="res://atlas/lexeme_food.tres" id="20_068gw"]
+[ext_resource type="Texture2D" uid="uid://4t17oyjsighm" path="res://atlas/lexeme_cat.tres" id="21_a8vnk"]
+[ext_resource type="Texture2D" uid="uid://bjy404pgta1il" path="res://atlas/lexeme_dog.tres" id="22_trgh1"]
+[ext_resource type="Texture2D" uid="uid://fehpv3dbtspm" path="res://atlas/lexeme_thing.tres" id="23_gj4cw"]
+[ext_resource type="Texture2D" uid="uid://2xwn5y37vu1g" path="res://atlas/lexeme_all.tres" id="24_3s1ea"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4156l"]
 atlas = ExtResource("4_rehcg")
@@ -25,7 +42,8 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 
-[node name="Background02" type="TextureRect" parent="Control"]
+[node name="Background" type="TextureRect" parent="Control"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -54,7 +72,6 @@ position = Vector2(-1661, -846)
 
 [node name="Cursor" type="Sprite2D" parent="Control/Control3/Grid"]
 unique_name_in_owner = true
-z_index = 1
 texture = SubResource("AtlasTexture_4156l")
 
 [node name="Control" type="Control" parent="Control"]
@@ -83,7 +100,7 @@ position = Vector2(-1653, -233)
 rotation = -3.14159
 texture = ExtResource("5_8pcgk")
 
-[node name="Control2" type="Control" parent="Control"]
+[node name="CompiControl" type="Control" parent="Control"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -97,24 +114,88 @@ offset_bottom = -260.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="UiAtlas03" type="Sprite2D" parent="Control/Control2"]
+[node name="UiAtlas03" type="Sprite2D" parent="Control/CompiControl"]
 position = Vector2(-858, -881)
 texture = ExtResource("3_vi3am")
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="Control/Control2"]
+[node name="Answer1" type="Node2D" parent="Control/CompiControl"]
+unique_name_in_owner = true
+visible = false
+
+[node name="LexemeI" type="Sprite2D" parent="Control/CompiControl/Answer1"]
+position = Vector2(-1307, -1373)
+texture = ExtResource("10_0it6b")
+
+[node name="LexemeApple" type="Sprite2D" parent="Control/CompiControl/Answer1"]
+position = Vector2(-1321, -978)
+texture = ExtResource("8_inof7")
+
+[node name="LexemeLike" type="Sprite2D" parent="Control/CompiControl/Answer1"]
+position = Vector2(-917, -1154)
+texture = ExtResource("11_14p0t")
+
+[node name="Answer2" type="Node2D" parent="Control/CompiControl"]
+unique_name_in_owner = true
+visible = false
+
+[node name="LexemeI" type="Sprite2D" parent="Control/CompiControl/Answer2"]
+position = Vector2(-1307, -1373)
+texture = ExtResource("10_0it6b")
+
+[node name="LexemeNotLike" type="Sprite2D" parent="Control/CompiControl/Answer2"]
+position = Vector2(-912, -1163)
+texture = ExtResource("14_jcobk")
+
+[node name="LexemeYou" type="Sprite2D" parent="Control/CompiControl/Answer2"]
+position = Vector2(-1317, -978)
+texture = ExtResource("17_vie2v")
+
+[node name="Answer3" type="Node2D" parent="Control/CompiControl"]
+unique_name_in_owner = true
+visible = false
+
+[node name="LexemeI" type="Sprite2D" parent="Control/CompiControl/Answer3"]
+position = Vector2(-1307, -1373)
+texture = ExtResource("10_0it6b")
+
+[node name="LexemeNotLike" type="Sprite2D" parent="Control/CompiControl/Answer3"]
+position = Vector2(-912, -1163)
+texture = ExtResource("14_jcobk")
+
+[node name="LexemeCat" type="Sprite2D" parent="Control/CompiControl/Answer3"]
+position = Vector2(-1317, -978)
+texture = ExtResource("21_a8vnk")
+
+[node name="Answer4" type="Node2D" parent="Control/CompiControl"]
+unique_name_in_owner = true
+visible = false
+
+[node name="LexemeI" type="Sprite2D" parent="Control/CompiControl/Answer4"]
+position = Vector2(-1307, -1373)
+texture = ExtResource("10_0it6b")
+
+[node name="LexemeNotHave" type="Sprite2D" parent="Control/CompiControl/Answer4"]
+position = Vector2(-912, -1163)
+texture = ExtResource("13_20ytd")
+
+[node name="LexemeDog" type="Sprite2D" parent="Control/CompiControl/Answer4"]
+position = Vector2(-1317, -978)
+texture = ExtResource("22_trgh1")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Control/CompiControl"]
 layout_mode = 0
 offset_left = -1461.0
 offset_top = -1082.0
 offset_right = 459.0
 offset_bottom = -2.0
 
-[node name="SubViewport" type="SubViewport" parent="Control/Control2/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="Control/CompiControl/SubViewportContainer"]
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
-[node name="Compicactus" parent="Control/Control2/SubViewportContainer/SubViewport" instance=ExtResource("7_6lgj7")]
+[node name="Compicactus" parent="Control/CompiControl/SubViewportContainer/SubViewport" instance=ExtResource("7_6lgj7")]
 unique_name_in_owner = true
 
 [node name="Screens" type="Control" parent="."]
@@ -157,7 +238,7 @@ offset_right = 20.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "Press A to start"
+text = "_press a to start"
 
 [node name="PauseScreen" type="Control" parent="Screens"]
 unique_name_in_owner = true
@@ -178,6 +259,23 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0509804, 0.0156863, 0.0470588, 1)
 
+[node name="PauseMenuLabel" type="Label" parent="Screens/PauseScreen"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -286.0
+offset_top = 681.0
+offset_right = 294.0
+offset_bottom = 894.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 120
+text = "[English]
+Quit"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="InventoryScreen" type="Control" parent="Screens"]
 unique_name_in_owner = true
 layout_mode = 1
@@ -188,7 +286,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="Screens/InventoryScreen"]
-modulate = Color(1, 1, 1, 0.737255)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -196,6 +293,376 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0509804, 0.0156863, 0.0470588, 1)
+
+[node name="LexemeWall" type="Control" parent="Screens/InventoryScreen"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Screens/InventoryScreen/LexemeWall"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -281.0
+offset_top = 148.0
+offset_right = 299.0
+offset_bottom = 361.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 120
+text = "_lexemes"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LexemeApple" type="Sprite2D" parent="Screens/InventoryScreen/LexemeWall"]
+position = Vector2(946, 1143)
+texture = ExtResource("8_inof7")
+
+[node name="LexemeHave" type="Sprite2D" parent="Screens/InventoryScreen/LexemeWall"]
+position = Vector2(955, 1662)
+texture = ExtResource("9_prhk2")
+
+[node name="LexemeI" type="Sprite2D" parent="Screens/InventoryScreen/LexemeWall"]
+position = Vector2(2169, 1163)
+texture = ExtResource("10_0it6b")
+
+[node name="LexemeLike" type="Sprite2D" parent="Screens/InventoryScreen/LexemeWall"]
+position = Vector2(2793, 1643)
+texture = ExtResource("11_14p0t")
+
+[node name="LexemeMoney" type="Sprite2D" parent="Screens/InventoryScreen/LexemeWall"]
+position = Vector2(918, 2599.5)
+texture = ExtResource("12_wd8hb")
+
+[node name="LexemeNotHave" type="Sprite2D" parent="Screens/InventoryScreen/LexemeWall"]
+position = Vector2(1570, 1638)
+texture = ExtResource("13_20ytd")
+
+[node name="LexemeNotLike" type="Sprite2D" parent="Screens/InventoryScreen/LexemeWall"]
+position = Vector2(2174, 1647)
+texture = ExtResource("14_jcobk")
+
+[node name="LexemeToOwn" type="Sprite2D" parent="Screens/InventoryScreen/LexemeWall"]
+position = Vector2(2848, 705)
+texture = ExtResource("15_mkx50")
+
+[node name="LexemeTree" type="Sprite2D" parent="Screens/InventoryScreen/LexemeWall"]
+position = Vector2(1553, 1172)
+texture = ExtResource("16_oc1qv")
+
+[node name="LexemeYou" type="Sprite2D" parent="Screens/InventoryScreen/LexemeWall"]
+position = Vector2(2854, 1175)
+texture = ExtResource("17_vie2v")
+
+[node name="LexemeEvent" type="Sprite2D" parent="Screens/InventoryScreen/LexemeWall"]
+position = Vector2(932, 670.5)
+texture = ExtResource("18_c8sii")
+
+[node name="LexemeToEat" type="Sprite2D" parent="Screens/InventoryScreen/LexemeWall"]
+position = Vector2(1546, 684.5)
+texture = ExtResource("19_10edw")
+
+[node name="LexemeFood" type="Sprite2D" parent="Screens/InventoryScreen/LexemeWall"]
+position = Vector2(2151, 685.5)
+texture = ExtResource("20_068gw")
+
+[node name="LexemeCat" type="Sprite2D" parent="Screens/InventoryScreen/LexemeWall"]
+position = Vector2(2783, 2060)
+texture = ExtResource("21_a8vnk")
+
+[node name="LexemeDog" type="Sprite2D" parent="Screens/InventoryScreen/LexemeWall"]
+position = Vector2(2155, 2060)
+texture = ExtResource("22_trgh1")
+
+[node name="LexemeThing" type="Sprite2D" parent="Screens/InventoryScreen/LexemeWall"]
+position = Vector2(947, 2089.5)
+texture = ExtResource("23_gj4cw")
+
+[node name="LexemeAll" type="Sprite2D" parent="Screens/InventoryScreen/LexemeWall"]
+position = Vector2(1532, 2089.5)
+texture = ExtResource("24_3s1ea")
+
+[node name="LexemeInformation" type="Control" parent="Screens/InventoryScreen"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Screens/InventoryScreen/LexemeInformation"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -281.0
+offset_top = 148.0
+offset_right = 299.0
+offset_bottom = 361.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 120
+text = "_lexeme information"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LexemeHave" type="Sprite2D" parent="Screens/InventoryScreen/LexemeInformation"]
+position = Vector2(1902, 582)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("9_prhk2")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Screens/InventoryScreen/LexemeInformation"]
+layout_mode = 0
+anchor_left = 0.0903646
+anchor_top = 0.361111
+anchor_right = 0.92474
+anchor_bottom = 0.906018
+text = "	{
+		\"name\": \"Posession\",
+		\"label\": \"owned by\",
+		\"category\": \"Verb\",
+		\"connections_amount\": 2,
+		\"syntactic-structure\": {
+			\"SUBJECT\": \"Noun\",
+			\"DIRECTOBJECT\": \"Noun\" #optional
+		},
+		\"semantic-structure\": {},
+		\"code\": \"ss\"
+	},"
+metadata/_edit_use_anchors_ = true
+
+[node name="Concepts" type="Control" parent="Screens/InventoryScreen"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Screens/InventoryScreen/Concepts"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -640.5
+offset_top = 148.0
+offset_right = 658.5
+offset_bottom = 361.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 120
+text = "_concepts"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LexemeAll" type="Sprite2D" parent="Screens/InventoryScreen/Concepts"]
+position = Vector2(1916, 587)
+texture = ExtResource("24_3s1ea")
+
+[node name="LexemeEvent" type="Sprite2D" parent="Screens/InventoryScreen/Concepts"]
+position = Vector2(2677, 987)
+texture = ExtResource("18_c8sii")
+
+[node name="LexemeThing" type="Sprite2D" parent="Screens/InventoryScreen/Concepts"]
+position = Vector2(1307, 897)
+texture = ExtResource("23_gj4cw")
+
+[node name="LexemeFood" type="Sprite2D" parent="Screens/InventoryScreen/Concepts"]
+position = Vector2(888, 1201)
+texture = ExtResource("20_068gw")
+
+[node name="LexemeApple" type="Sprite2D" parent="Screens/InventoryScreen/Concepts"]
+position = Vector2(479, 1582)
+texture = ExtResource("8_inof7")
+
+[node name="LexemeMoney" type="Sprite2D" parent="Screens/InventoryScreen/Concepts"]
+position = Vector2(1636, 1405)
+texture = ExtResource("12_wd8hb")
+
+[node name="LexemeToEat" type="Sprite2D" parent="Screens/InventoryScreen/Concepts"]
+position = Vector2(2458, 1429)
+texture = ExtResource("19_10edw")
+
+[node name="LexemeToOwn" type="Sprite2D" parent="Screens/InventoryScreen/Concepts"]
+position = Vector2(2991, 1434)
+texture = ExtResource("15_mkx50")
+
+[node name="LexemeLike" type="Sprite2D" parent="Screens/InventoryScreen/Concepts"]
+position = Vector2(3462, 1382)
+texture = ExtResource("11_14p0t")
+
+[node name="Line2D" type="Line2D" parent="Screens/InventoryScreen/Concepts"]
+points = PackedVector2Array(1787, 659, 1440, 806)
+width = 30.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="Line2D2" type="Line2D" parent="Screens/InventoryScreen/Concepts"]
+position = Vector2(-509, 323)
+points = PackedVector2Array(1678, 664, 1521, 792)
+width = 30.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="Line2D3" type="Line2D" parent="Screens/InventoryScreen/Concepts"]
+position = Vector2(-927, 708)
+points = PackedVector2Array(1663, 640, 1520, 783)
+width = 30.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="Line2D4" type="Line2D" parent="Screens/InventoryScreen/Concepts"]
+position = Vector2(-204, 489)
+points = PackedVector2Array(1782, 745, 1639, 550)
+width = 30.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="Line2D5" type="Line2D" parent="Screens/InventoryScreen/Concepts"]
+position = Vector2(686, 4)
+points = PackedVector2Array(1839, 902, 1401, 636)
+width = 30.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="Line2D6" type="Line2D" parent="Screens/InventoryScreen/Concepts"]
+position = Vector2(1447, 366)
+points = PackedVector2Array(1848, 897, 1358, 635)
+width = 30.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="Line2D7" type="Line2D" parent="Screens/InventoryScreen/Concepts"]
+position = Vector2(1333, 494)
+points = PackedVector2Array(1449, 688, 1549, 811)
+width = 30.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="Line2D8" type="Line2D" parent="Screens/InventoryScreen/Concepts"]
+position = Vector2(862, 423)
+points = PackedVector2Array(1691, 664, 1606, 821)
+width = 30.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="ConceptInformation" type="Control" parent="Screens/InventoryScreen"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Screens/InventoryScreen/ConceptInformation"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -640.5
+offset_top = 148.0
+offset_right = 658.5
+offset_bottom = 361.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 120
+text = "_concept information"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LexemeFood2" type="Sprite2D" parent="Screens/InventoryScreen/ConceptInformation"]
+position = Vector2(1901, 635)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("20_068gw")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Screens/InventoryScreen/ConceptInformation"]
+layout_mode = 0
+anchor_left = 0.0903646
+anchor_top = 0.361111
+anchor_right = 0.92474
+anchor_bottom = 0.906018
+text = "	{
+		\"name\": \"Food\",
+		\"example\": \"An apple\",
+        \"is-a\": \"thing\",
+		\"edible\": true,
+		\"alive\": false
+	}"
+metadata/_edit_use_anchors_ = true
+
+[node name="CompiBrain" type="Control" parent="Screens/InventoryScreen"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Screens/InventoryScreen/CompiBrain"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -650.0
+offset_top = 148.0
+offset_right = 668.0
+offset_bottom = 361.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 120
+text = "_compicactus brain"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Screens/InventoryScreen/CompiBrain"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0903646
+anchor_top = 0.211574
+anchor_right = 0.92474
+anchor_bottom = 0.870833
+text = "[
+	{
+		\"id\": \"human_1\",
+		\"name\": \"Eibriel\",
+		\"concept\": \"human\"
+	},
+	{
+		\"id\": \"ai_1\",
+		\"name\": \"Compicactus\",
+		\"concept\": \"ai\"
+	},
+	{
+		\"id\": \"to_like_1\",
+		\"concept\": \"to_like\",
+		\"agent\":  \"ai_1\",
+		\"theme\": \"human_1\"
+]"
+metadata/_edit_use_anchors_ = true
 
 [node name="LogoScreen" type="Control" parent="."]
 unique_name_in_owner = true
@@ -218,6 +685,7 @@ grow_vertical = 2
 color = Color(0.0509804, 0.0156863, 0.0470588, 1)
 
 [node name="EibrielLogo" type="TextureRect" parent="LogoScreen"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -230,4 +698,5 @@ offset_right = 825.5
 offset_bottom = 265.5
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(825, 265)
 texture = ExtResource("8_xc56p")
