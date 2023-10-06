@@ -1,7 +1,7 @@
 # Compicactus
 Compicactus is a game about learning a visual constructed language to chat with a cute AI. Have a date, build memories, share moments and have fun!
 
-- [Wishlist on Steam](https://store.steampowered.com/app/2278200/Compicactus/)
+- [Wishlist on Steam](https://store.steampowered.com/app/2278200/Compicactus/?utm_source=github&utm_campaign=readme)
 - [Devlog on Youtube](https://www.youtube.com/watch?v=hBWV56CIG6o&list=PLoXMxh2dU4JD9KdEFwtnuaq06xZcBSqEM)
 
 ## Use of AI
