@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2s8wb8ol5a8f"]
+
+[ext_resource type="Script" path="res://mockups/roguelike_deckbuilder.gd" id="1_j34o7"]
+
+[node name="roguelike_deckbuilder" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_j34o7")
+
+[node name="Output" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 185.0
+offset_top = 140.0
+offset_right = 3660.0
+offset_bottom = 1704.0
+text = "Output:"
+
+[node name="Input" type="LineEdit" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 184.0
+offset_top = 1778.0
+offset_right = 3678.0
+offset_bottom = 2056.0
+placeholder_text = "Input"
+context_menu_enabled = false
+shortcut_keys_enabled = false
+middle_mouse_paste_enabled = false
+
+[connection signal="text_submitted" from="Input" to="." method="_on_input_text_submitted"]
